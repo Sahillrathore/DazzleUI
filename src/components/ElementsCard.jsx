@@ -1,5 +1,6 @@
 import React from "react";
 import { FiPlus, FiDownload, FiCompass, FiFigma } from "react-icons/fi";
+import { Link } from "react-router-dom";
 
 const cards = [
     {
@@ -120,10 +121,10 @@ const ElementsCard = () => {
             </div>
 
             <div className="flex justify-center w-full py-5">
-                <button class="animated-button">
+                <Link to='/elements' className="animated-button">
                     <span>Explore All</span>
                     <span></span>
-                </button>
+                </Link>
             </div>
 
         </div>
