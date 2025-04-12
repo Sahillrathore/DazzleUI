@@ -6,7 +6,7 @@ import ElementsCard from '../components/ElementsCard'
 const Homepage = () => {
   return (
     <div>
-        <Header/>
+        {/* <Header/> */}
         <HeroSection/>
         <ElementsCard/>
     </div>
