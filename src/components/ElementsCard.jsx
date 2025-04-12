@@ -118,6 +118,14 @@ const ElementsCard = () => {
                     </div>
                 ))}
             </div>
+
+            <div className="flex justify-center w-full py-5">
+                <button class="animated-button">
+                    <span>Explore All</span>
+                    <span></span>
+                </button>
+            </div>
+
         </div>
     );
 };
