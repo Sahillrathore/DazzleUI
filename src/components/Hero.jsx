@@ -1,6 +1,7 @@
 import clsx from "clsx";
 import React, { useEffect, useState } from "react";
 import { FaRocket } from "react-icons/fa";
+import { MdOutlineElectricBolt } from "react-icons/md";
 
 const HeroSection = () => {
 
@@ -91,6 +92,11 @@ const HeroSection = () => {
                     </button>
                 </div>
             </div>
+
+            <div className="absolute top-36 text-white/5 blur-sm right-16 text-[22rem]">
+                <MdOutlineElectricBolt/>
+            </div>
+            
         </div>
     );
 };
