@@ -28,7 +28,6 @@ function Elements() {
 
     return (
         <div className="flex min-h-screen text-white">
-            <Sidebar />
 
             <div className="flex-1 py-6 px-4">
                 <div className="flex justify-between items-center flex-wrap gap-4 mb-6">
