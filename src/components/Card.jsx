@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 const Card = ({ element }) => {
-    const isUserGenerated = element.html && element.css;
+    const isUserGenerated = element.html;
     const [open, setOpen] = useState(false);
 
     const copyToClipboard = (code) => {
@@ -20,9 +20,11 @@ const Card = ({ element }) => {
                     {isUserGenerated ? (
                         <iframe
                             srcDoc={`
-                                    <html>
-                                    <head>
-                                        <style>
+                                <html>
+                                <head>
+                                    ${element.styleType === "tailwind"
+                                    ? `<script src="https://cdn.tailwindcss.com"></script>`
+                                    : `<style>
                                         html, body {
                                             margin: 0;
                                             padding: 0;
@@ -33,15 +35,33 @@ const Card = ({ element }) => {
                                             height: 100%;
                                         }
                                         ${element.css}
-                                        </style>
-                                    </head>
-                                    <body>${element.html}</body>
-                                    </html>
-                                `}
+                                        </style>`
+                                }
+                                    <style>
+                                    html, body {
+                                        margin: 0;
+                                        padding: 0;
+                                        background: transparent;
+                                        height: 100%;
+                                        width: 100%;
+                                    }
+                                    </style>
+                                </head>
+                                <body>
+                                    ${element.styleType === "tailwind"
+                                    ? `<div class="w-full h-full flex items-center justify-center">${element.html}</div>`
+                                    : `${element.html}`
+                                }
+                                </body>
+                                </html>
+                            `}
                             title="Preview"
                             className="w-full h-full"
                             sandbox="allow-scripts"
                         />
+
+
+
                     ) : (
                         <div className="w-full h-full flex justify-center items-center text-gray-700 text-sm">
                             {element.name}
@@ -76,27 +96,46 @@ const Card = ({ element }) => {
                             <iframe
                                 srcDoc={`
                                         <html>
-                                            <head>
-                                            <style>
+                                        <head>
+                                            ${element.styleType === "tailwind"
+                                        ? `<script src="https://cdn.tailwindcss.com"></script>`
+                                        : `<style>
                                                 html, body {
+                                                    margin: 0;
+                                                    padding: 0;
+                                                    background: transparent;
+                                                    display: flex;
+                                                    align-items: center;
+                                                    justify-content: center;
+                                                    height: 100%;
+                                                }
+                                                ${element.css}
+                                                </style>`
+                                    }
+                                            <style>
+                                            html, body {
                                                 margin: 0;
                                                 padding: 0;
                                                 background: transparent;
-                                                display: flex;
-                                                align-items: center;
-                                                justify-content: center;
                                                 height: 100%;
-                                                }
-                                                ${element.css}
+                                                width: 100%;
+                                            }
                                             </style>
-                                            </head>
-                                            <body>${element.html}</body>
+                                        </head>
+                                        <body>
+                                            ${element.styleType === "tailwind"
+                                        ? `<div class="w-full h-full flex items-center justify-center">${element.html}</div>`
+                                        : `${element.html}`
+                                    }
+                                        </body>
                                         </html>
-                                        `}
+                                    `}
                                 title="Preview"
                                 className="w-full h-full"
                                 sandbox="allow-scripts"
                             />
+
+
                         </div>
 
                         {/* HTML code */}
