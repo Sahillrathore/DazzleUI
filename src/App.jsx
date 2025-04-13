@@ -6,6 +6,7 @@ import Header from './components/Header'
 import ProtectedRoute from './components/ProtectedRoute'
 import CreatePage from './pages/CreatePage'
 import Login from './pages/Login'
+import SidebarLayout from './components/SidebarLayout'
 
 const App = () => {
   return (
@@ -13,9 +14,15 @@ const App = () => {
       <Header/>
       <Routes>
         <Route path="/" element={<Homepage />} />
-        <Route path="/elements" element={<Elements />} />
-        <Route path="/create" element={<ProtectedRoute><CreatePage /></ProtectedRoute>} />
+        {/* <Route path="/elements" element={<Elements />} /> */}
+        {/* <Route path="/create" element={<ProtectedRoute><CreatePage /></ProtectedRoute>} /> */}
         <Route path="/login" element={<Login />} />
+
+        {/* Routes with sidebar */}
+        <Route element={<SidebarLayout />}>
+          <Route path="/elements" element={<Elements />} />
+          <Route path="/create" element={<ProtectedRoute><CreatePage /></ProtectedRoute>} />
+        </Route>
       </Routes>
     </div>
   )

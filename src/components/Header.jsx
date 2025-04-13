@@ -15,7 +15,7 @@ export default function Header() {
         <header className="bg-transparent text-white  px-6 py-4 flex items-center justify-between shadow-md">
             <div className="flex items-center gap-4">
                 <Link to='/' className="text-xl font-bold text-white">
-                    <span className="text-purple-400">Dazzle</span>UI
+                    <span className="text-purple-400">Dora</span>UI
                 </Link>
 
                 <div
