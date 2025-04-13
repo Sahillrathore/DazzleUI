@@ -155,6 +155,7 @@ const Card = ({ element }) => {
                         </div>
 
                         {/* CSS code */}
+                        {element.css &&
                         <div>
                             <div className="flex justify-between items-center mb-1">
                                 <span className="text-sm font-medium">CSS</span>
@@ -168,7 +169,7 @@ const Card = ({ element }) => {
                             <pre className="bg-[#2a2a2a] p-3 rounded text-sm overflow-auto">
                                 {element.css}
                             </pre>
-                        </div>
+                        </div>}
                     </div>
                 </div>
             )}
