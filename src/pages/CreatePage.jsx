@@ -26,6 +26,7 @@ const CreatePage = () => {
             console.log('Enter Title');
             return;
         }
+        
 
         const savedElements = JSON.parse(localStorage.getItem("elements") || "[]");
 
