@@ -1,0 +1,212 @@
+import React, { useState } from "react";
+import Editor from "@monaco-editor/react";
+import { FaRegCopy, FaRegHeart } from "react-icons/fa";
+import { BiExport } from "react-icons/bi";
+import { BsStars } from "react-icons/bs";
+import { CgMaximize } from "react-icons/cg";
+
+const Card = ({ element }) => {
+    const [open, setOpen] = useState(false);
+    const [tab, setTab] = useState("html");
+    const [bgColor, setBgColor] = useState("#e8e8e8");
+
+    const hasCSS = element.framework === "css" && element.css;
+
+    const iframeSrcDoc = `
+    <html>
+      <head>
+        ${element.framework === "tailwindcss"
+            ? '<script src="https://cdn.tailwindcss.com"></script>'
+            : `<style>${element.css || ""}</style>`
+        }
+        <style>
+          body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background-color: ${bgColor};
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+        </style>
+      </head>
+      <body>${element.html}</body>
+    </html>
+  `;
+
+    const copyToClipboard = (code) => {
+        navigator.clipboard.writeText(code);
+        alert("Copied to clipboard!");
+    };
+
+    return (
+        <>
+            {/* === Card Preview === */}
+            <div
+                className="bg-[#1a1a1a] rounded-xl overflow-hidden cursor-pointer hover:shadow-lg transition"
+                onClick={() => setOpen(true)}
+            >
+                <div className="h-52 bg-black">
+                    <iframe
+                        srcDoc={iframeSrcDoc}
+                        title="Preview"
+                        className="w-full h-full"
+                        sandbox="allow-scripts"
+                    />
+                </div>
+                <div className="text-sm text-gray-400 px-4 py-3">
+                    <p className="font-medium">{element.title}</p>
+                    <div className="flex items-center justify-between text-xs mt-1">
+                        <span>{element.createdBy}</span>
+                        <span>{element.views || 0} views</span>
+                    </div>
+                </div>
+            </div>
+
+            {/* === Modal === */}
+            {open && (
+                <div className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4 overflow-auto">
+                    <div className="bg-[#1a1a1a] text-white rounded-xl w-full max-w-6xl shadow-2xl overflow-hidden">
+                        {/* === Top Bar === */}
+                        <div className="flex items-center justify-between px-5 py-4 bg-black border-b border-gray-800">
+                            <div className="flex gap-3 items-center">
+                                <button
+                                    onClick={() => setOpen(false)}
+                                    className="text-sm text-gray-400 hover:text-white"
+                                >
+                                    ← Go back
+                                </button>
+                                <span className="text-sm text-gray-400">|</span>
+                                <span className="text-sm text-white font-medium">{element.title}</span>
+                               
+                                <span className="text-xs text-gray-500 ml-4">
+                                    👁 {element.views || 0}
+                                </span>
+                            </div>
+
+                            <div className="flex items-center gap-4">
+
+                                <span className=" text-gray-500 ml-2 text-lg">
+                                    by <span className="text-indigo-400">{element.createdBy}</span>
+                                </span>
+                                
+                                <span className="text-gray-300 text-sm">{bgColor}</span>
+                                <input
+                                    type="color"
+                                    value={bgColor}
+                                    onChange={(e) => setBgColor(e.target.value)}
+                                    className="w-6 h-6 cursor-pointer border border-white rounded"
+                                />
+                            </div>
+                        </div>
+
+                        {/* === Content === */}
+                        <div className="grid grid-cols-1 md:grid-cols-2">
+                            {/* === Preview === */}
+                            <div className="h-[500px] bg-[#111] border-r border-gray-800">
+                                <iframe
+                                    title="Preview"
+                                    className="w-full h-full"
+                                    srcDoc={iframeSrcDoc}
+                                    sandbox="allow-scripts"
+                                />
+                            </div>
+
+                            {/* === Code Editor === */}
+                            <div className="bg-[#1e1e1e] flex flex-col">
+                                {/* Tabs */}
+                                <div className="flex border-b border-[#333] text-sm font-medium">
+                                    <button
+                                        onClick={() => setTab("html")}
+                                        className={`px-4 py-2 flex items-center gap-2 ${tab === "html"
+                                                ? "bg-[#1e1e1e] text-white border-b-2 border-white"
+                                                : "text-gray-400 hover:text-white"
+                                            }`}
+                                    >
+                                        <img
+                                            src="https://img.icons8.com/color/200/html-5.png"
+                                            alt="html"
+                                            className="w-4"
+                                        />
+                                        HTML
+                                    </button>
+                                    {hasCSS && (
+                                        <button
+                                            onClick={() => setTab("css")}
+                                            className={`px-4 py-2 flex items-center gap-2 ${tab === "css"
+                                                    ? "bg-[#1e1e1e] text-white border-b-2 border-white"
+                                                    : "text-gray-400 hover:text-white"
+                                                }`}
+                                        >
+                                            <img
+                                                src="https://img.icons8.com/fluent/512/css3.png"
+                                                alt="css"
+                                                className="w-4"
+                                            />
+                                            CSS
+                                        </button>
+                                    )}
+                                </div>
+
+                                {/* Monaco Editor */}
+                                <div className="flex-1 bg-[#0d0d0d] p-2">
+                                    <div className="relative h-full border border-[#333] rounded-lg">
+                                        <Editor
+                                            height="100%"
+                                            language={tab === "html" ? "html" : "css"}
+                                            theme="vs-dark"
+                                            value={tab === "html" ? element.html : element.css}
+                                            options={{
+                                                fontSize: 14,
+                                                minimap: { enabled: false },
+                                                wordWrap: "on",
+                                                readOnly: true
+                                            }}
+                                        />
+                                        <button
+                                            onClick={() =>
+                                                copyToClipboard(tab === "html" ? element.html : element.css)
+                                            }
+                                            className="absolute top-2 right-3 text-gray-400 hover:text-white"
+                                            title="Copy code"
+                                        >
+                                            <FaRegCopy size={16} />
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* === Bottom Action Bar === */}
+                        <div className="px-5 py-4 bg-black border-t border-gray-800 flex justify-between">
+                            <div className="flex items-center gap-4 text-gray-400 text-sm">
+                                <button className="flex items-center gap-2 hover:text-white">
+                                    <FaRegHeart /> Save to favorites
+                                </button>
+                                <button className="flex items-center gap-2 hover:text-white">
+                                    <img
+                                        src="https://upload.wikimedia.org/wikipedia/commons/3/33/Figma-logo.svg"
+                                        className="w-4 h-4"
+                                        alt="Figma"
+                                    />
+                                    Copy to Figma
+                                </button>
+                            </div>
+                            <div className="flex items-center gap-4 text-sm text-white">
+                                <button className="flex items-center gap-2 px-3 py-2 bg-[#2a2a2a] rounded-md hover:bg-[#333]">
+                                    <BiExport /> Export
+                                </button>
+                                <button className="flex items-center gap-2 px-3 py-2 bg-[#2a2a2a] rounded-md hover:bg-[#333]">
+                                    <CgMaximize /> Maximize
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+        </>
+    );
+};
+
+export default Card;
