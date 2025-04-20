@@ -18,12 +18,15 @@ const App = () => {
       withCredentials: true,
     })
       .then(res => setUser(res.data.user))
-      .catch(() => setUser(null));
-  }, []);
-  
+      .catch((err) => console.log(err));
+
+      
+    }, []);
+    console.log(user);
+    
   return (
     <div>
-      <Header/>
+      <Header user={user}/>
       <Routes>
         <Route path="/" element={<Homepage />} />
         {/* <Route path="/elements" element={<Elements />} /> */}
