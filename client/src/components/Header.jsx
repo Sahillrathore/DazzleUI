@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-export default function Header() {
+export default function Header({user}) {
     const [isMegaMenuOpen, setMegaMenuOpen] = useState(false);
 
     const navigate = useNavigate();
@@ -62,6 +62,7 @@ export default function Header() {
                 <a className="px-3 py-1 rounded hover:bg-white/10 transition font-medium">Challenges <span className="text-green-500">•</span></a>
                 <a className="px-3 py-1 rounded hover:bg-white/10 transition font-medium">Spotlight</a>
                 <a className="px-3 py-1 rounded hover:bg-white/10 transition font-medium">Blog</a>
+                <a className="px-3 py-1 rounded hover:bg-white/10 transition font-medium">{user?.name}</a>
             </div>
 
             <div className="flex gap-4">
