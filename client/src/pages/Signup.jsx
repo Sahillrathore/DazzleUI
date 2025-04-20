@@ -4,6 +4,10 @@ import { FaGithub, FaGoogle, FaXTwitter } from "react-icons/fa6";
 const Signup = () => {
     const [isSignup, setIsSignup] = useState(true);
 
+    const loginWithGoogle = () => {
+        window.open("http://localhost:5000/auth/google", "_self");
+    };
+
     return (
         <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
             <div className="relative w-full max-w-xl bg-gradient-to-b from-[#2b2b62] via-[#1a1a1a] to-[#1a1a1a] rounded-2xl shadow-xl p-6 sm:p-8 overflow-hidden text-white">
@@ -55,7 +59,9 @@ const Signup = () => {
                         <FaGithub />
                         {isSignup ? "Continue with GitHub" : "Sign in with GitHub"}
                     </button>
-                    <button className="w-2/3 flex items-center justify-center gap-2 bg-[#1f1f1f] hover:bg-[#2a2a2a] text-white py-2 rounded-md text-sm font-medium transition">
+                    <button className="w-2/3 flex items-center justify-center gap-2 bg-[#1f1f1f] hover:bg-[#2a2a2a] text-white py-2 rounded-md text-sm font-medium transition"
+                        onClick={loginWithGoogle}
+                    >
                         <FaGoogle className="text-[#EA4335]" />
                         {isSignup ? "Continue with Google" : "Sign in with Google"}
                     </button>

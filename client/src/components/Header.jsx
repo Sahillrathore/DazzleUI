@@ -8,7 +8,7 @@ export default function Header() {
 
     const handleCreate = () => {
         const isLoggedIn = localStorage.getItem("isLoggedIn");
-        navigate(isLoggedIn ? "/create" : "/login");
+        navigate(isLoggedIn ? "/create" : "/signup");
     };
 
     return (
