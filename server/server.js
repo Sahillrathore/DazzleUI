@@ -66,10 +66,13 @@ app.get("/auth/google/callback",
     (req, res) => {
         const token = createToken(req.user);
 
+        console.log(token);
+        
+
         res.cookie("token", token, {
             httpOnly: true,
             secure: false, // set true in production
-            sameSite: "lax",
+            sameSite: "Lax",
         });
 
         res.redirect("http://localhost:5173/create"); // or your dashboard route
@@ -85,7 +88,9 @@ app.get("/auth/logout", (req, res) => {
 
 // JWT-protected route
 app.get("/auth/user", verifyToken, (req, res) => {
+    console.log("Decoded user:", req.user); // check what's inside
     res.json({ user: req.user });
 });
+
 
 app.listen(5000, () => console.log("🚀 Server running on http://localhost:5000"));
