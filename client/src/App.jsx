@@ -28,8 +28,6 @@ const App = () => {
       <Header user={user}/>
       <Routes>
         <Route path="/" element={<Homepage />} />
-        {/* <Route path="/elements" element={<Elements />} /> */}
-        {/* <Route path="/create" element={<ProtectedRoute><CreatePage /></ProtectedRoute>} /> */}
         <Route path="/signup" element={<Signup />} />
 
         {/* Routes with sidebar */}
