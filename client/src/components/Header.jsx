@@ -45,7 +45,7 @@ export default function Header({user}) {
                             </div>
                             <div className="bg-gradient-to-br max-h-fit from-purple-500 to-blue-600 rounded-xl text-center px-4 py-6 flex flex-col justify-between">
                                 <img src="https://uiverse.io/assets/astronaut-LQ_BQU63.png" alt="Astronaut" className="h-32 mx-auto mb-4" />
-                                <h3 className="font-bold text-2xl">We're on <br /> Social Media!</h3>
+                                <h3 className="font-bold text-2xl">We're on <br /> Social Media</h3>
                                 <p className="text-sm text-white/80 mb-4">
                                     Follow us to find out about new challenges, updates and posts.
                                 </p>

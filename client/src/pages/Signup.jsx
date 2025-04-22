@@ -5,7 +5,9 @@ const Signup = () => {
     const [isSignup, setIsSignup] = useState(true);
 
     const loginWithGoogle = () => {
-        window.open("http://localhost:5000/auth/google", "_self");
+        // window.open(process.env.BACKEND_URL+"/auth/google", "_self");
+        window.open(import.meta.env.VITE_BACKEND_URL + "/auth/google", "_self");
+        
     };
 
     return (
