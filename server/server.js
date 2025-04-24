@@ -45,7 +45,8 @@ passport.use(
                 googleId: profile.id,
                 name: profile.displayName,
                 email: profile.emails?.[0]?.value,
-                avatar: profile.photos?.[0]?.value
+                avatar: profile.photos?.[0]?.value,
+                provider: 'google',
             });
             return done(null, newUser);
         }
@@ -89,7 +90,7 @@ app.get("/auth/logout", (req, res) => {
 // JWT-protected route
 app.get("/auth/user", verifyToken, (req, res) => {
     console.log("Decoded user:", req.user); // check what's inside
-    res.json({ user: req.user });
+    res.json({ ...req.user, loggedin: true });
 });
 
 

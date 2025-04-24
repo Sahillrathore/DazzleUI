@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/authContext";
 
-export default function Header({user}) {
+export default function Header() {
     const [isMegaMenuOpen, setMegaMenuOpen] = useState(false);
 
+    const {user} = useAuth();
     const navigate = useNavigate();
 
     const handleCreate = () => {
-        const isLoggedIn = localStorage.getItem("isLoggedIn");
-        navigate(isLoggedIn ? "/create" : "/signup");
+        navigate(user ? "/create" : "/signup");
     };
 
     return (

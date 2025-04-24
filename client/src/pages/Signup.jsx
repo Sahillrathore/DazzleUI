@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import { FaGithub, FaGoogle, FaXTwitter } from "react-icons/fa6";
+import { useAuth } from "../context/authContext";
 
-const Signup = () => {
+const Signup = ({ isOpen, setIsOpen }) => {
     const [isSignup, setIsSignup] = useState(true);
-
+    const { user } = useAuth();
+    console.log(user);
+    
     const loginWithGoogle = () => {
         // window.open(process.env.BACKEND_URL+"/auth/google", "_self");
         window.open(import.meta.env.VITE_BACKEND_URL + "/auth/google", "_self");
@@ -14,12 +17,12 @@ const Signup = () => {
         <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
             <div className="relative w-full max-w-xl bg-gradient-to-b from-[#2b2b62] via-[#1a1a1a] to-[#1a1a1a] rounded-2xl shadow-xl p-6 sm:p-8 overflow-hidden text-white">
                 {/* Close Button */}
-                <button
+                {/* <button
                     className="absolute top-4 right-5 text-white text-2xl"
-                    onClick={() => console.log("Close modal")}
+                    onClick={() => { setIsOpen(false) }}
                 >
                     &times;
-                </button>
+                </button> */}
 
                 {/* Astronaut */}
                 <img
