@@ -1,7 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const passport = require("passport");
-// const session = require("cookie-session");
 const cookieParser = require("cookie-parser");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const User = require("./models/users");
@@ -9,6 +8,8 @@ require("dotenv").config();
 const cors = require("cors");
 const createToken = require("./utils/createToken");
 const verifyToken = require("./middlewares/verifyToken");
+const auth = require("./middleware/auth");
+const elementsRouter = require('./routes/elements')
 
 const app = express();
 
@@ -25,6 +26,9 @@ app.use(cors({
 
 
 app.use(cookieParser());
+app.use(express.json())
+
+// app.use(auth())
 
 // Passport
 app.use(passport.initialize());
@@ -86,6 +90,8 @@ app.get("/auth/logout", (req, res) => {
         res.redirect("/");
     });
 });
+
+app.use('/api/elements', elementsRouter)
 
 // JWT-protected route
 app.get("/auth/user", verifyToken, (req, res) => {
