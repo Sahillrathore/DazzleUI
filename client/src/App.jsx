@@ -11,21 +11,9 @@ import axios from 'axios';
 
 const App = () => {
 
-  const [user,setUser] = useState();
-
-  useEffect(() => {
-    axios.get("http://localhost:5000/auth/user", {
-      withCredentials: true,
-    })
-      .then(res => setUser(res.data.user))
-      .catch((err) => console.log(err));
-
-      
-    }, []);
-    
   return (
     <div>
-      <Header user={user}/>
+      <Header />
       <Routes>
         <Route path="/" element={<Homepage />} />
         <Route path="/signup" element={<Signup />} />
@@ -33,7 +21,7 @@ const App = () => {
         {/* Routes with sidebar */}
         <Route element={<SidebarLayout />}>
           <Route path="/elements" element={<Elements />} />
-          <Route path="/create" element={<CreatePage />} />
+          <Route path="/create" element={<ProtectedRoute><CreatePage /></ProtectedRoute>} />
         </Route>
       </Routes>
     </div>
