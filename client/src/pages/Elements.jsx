@@ -1,29 +1,20 @@
 import React, { useState, useEffect } from "react";
 import Sidebar from "../components/Sidebar";
 import Card from "../components/Card";
+import { getAllElements } from "../utils/apiCall";
 
 function Elements() {
     const [search, setSearch] = useState("");
     const [allElements, setAllElements] = useState([]);
 
     useEffect(() => {
-        const savedElements = JSON.parse(localStorage.getItem("elements") || "[]");
-
-        const combined = [
-            ...savedElements.map((el) => ({
-                ...el,
-                name: el.title || "Custom UI",
-                views: "0",
-                saves: 0,
-                tag: "User",
-            })),
-        ];
-
-        setAllElements(combined);
+        getAllElements()
+            .then(setAllElements)
+            .catch((err) => console.error("Failed to fetch elements", err));
     }, []);
 
     const filtered = allElements.filter((el) =>
-        el.name.toLowerCase().includes(search.toLowerCase())
+        el.title.toLowerCase().includes(search.toLowerCase())
     );
 
     return (

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Editor from "@monaco-editor/react";
 import ElementType from "../components/ElementType";
+import axios from "axios";
 
 const defaultTemplates = {
     button: {
@@ -55,29 +56,36 @@ const CreatePage = () => {
         }
     }, [formData.type, formData.framework]);
 
-    const handleSave = () => {
+    const handleSave = async () => {
         if (!postTitle) {
             console.log("Enter Title");
             return;
         }
 
-        const savedElements = JSON.parse(localStorage.getItem("elements") || "[]");
-
         const newElement = {
-            id: formData.id,
+            title: postTitle,
             html: formData.html,
             css: formData.framework === "tailwindcss" ? "" : formData.css,
             framework: formData.framework,
-            title: postTitle,
-            bgColor,
-            createdBy: "sahillRathore",
-            createdAt: new Date().toISOString()
+            bgcolor: bgColor,
+            tags: formData.tags || [], // optional: add tags support
         };
 
-        savedElements.push(newElement);
-        localStorage.setItem("elements", JSON.stringify(savedElements));
-        alert("UI Element saved!");
+        try {
+            const res = await axios.post(import.meta.env.VITE_BACKEND_URL+"/api/elements", newElement, {
+                withCredentials: true, // send cookie (JWT)
+            });
+
+            if (res.status === 201) {
+                alert("UI Element saved to server!");
+                console.log(res.data.element);
+            }
+        } catch (err) {
+            console.error("Save failed:", err);
+            alert("Failed to save element.");
+        }
     };
+
 
     const combinedCode = `
     <html>

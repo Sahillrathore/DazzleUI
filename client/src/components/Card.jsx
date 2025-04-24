@@ -8,7 +8,7 @@ import { CgMaximize } from "react-icons/cg";
 const Card = ({ element }) => {
     const [open, setOpen] = useState(false);
     const [tab, setTab] = useState("html");
-    const [bgColor, setBgColor] = useState("#e8e8e8");
+    const [bgColor, setBgColor] = useState(element.bgcolor || '#e8e8e8');
 
     const hasCSS = element.framework === "css" && element.css;
 
