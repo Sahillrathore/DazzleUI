@@ -44,6 +44,19 @@ const CreatePage = () => {
         createdAt: Date.now()
     });
 
+    useEffect(() => {
+        const handleBeforeUnload = (event) => {
+            event.preventDefault();
+            event.returnValue = ''; // 👈 necessary for Chrome to show the alert
+        };
+
+        window.addEventListener('beforeunload', handleBeforeUnload);
+
+        return () => {
+            window.removeEventListener('beforeunload', handleBeforeUnload);
+        };
+    }, []);
+
     // Update template when type or framework changes
     useEffect(() => {
         const currentTemplate = defaultTemplates[formData.type]?.[formData.framework];
@@ -72,7 +85,7 @@ const CreatePage = () => {
         };
 
         try {
-            const res = await axios.post(import.meta.env.VITE_BACKEND_URL+"/api/elements", newElement, {
+            const res = await axios.post(import.meta.env.VITE_BACKEND_URL + "/api/elements", newElement, {
                 withCredentials: true, // send cookie (JWT)
             });
 

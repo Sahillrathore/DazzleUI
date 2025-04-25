@@ -19,7 +19,7 @@ mongoose.connect(process.env.MONGO_URI).then(() => {
 });
 
 app.use(cors({
-    origin: "http://localhost:5173",
+    origin: "http://localhost:5175",
     methods: ["GET", "POST"],
     credentials: true, // ✅ allow sending cookies from frontend
 }));
@@ -80,7 +80,7 @@ app.get("/auth/google/callback",
             sameSite: "Lax",
         });
 
-        res.redirect("http://localhost:5173/create"); // or your dashboard route
+        res.redirect("http://localhost:5175/create"); // or your dashboard route
     }
 );
 
