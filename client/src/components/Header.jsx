@@ -4,8 +4,9 @@ import { useAuth } from "../context/authContext";
 
 export default function Header() {
     const [isMegaMenuOpen, setMegaMenuOpen] = useState(false);
+    const [isDropdownOpen, setDropdownOpen] = useState(false);
 
-    const {user} = useAuth();
+    const { user } = useAuth();
     const navigate = useNavigate();
 
     const handleCreate = () => {
@@ -68,11 +69,45 @@ export default function Header() {
 
             <div className="flex gap-4">
                 <button className="bg-gradient-to-r from-purple-500 to-blue-500 px-4 py-1.5 rounded text-white font-semibold"
-                onClick={handleCreate}
+                    onClick={handleCreate}
                 >+ Create</button>
-                <button className="bg-white/10 px-4 py-1.5 rounded text-white font-semibold flex items-center gap-2">
-                    🚀 Join the Community
-                </button>
+                {
+                    user ? (
+                        <div className="relative">
+                            <img
+                                src={user.avatar}
+                                className="rounded-full w-10 border border-gray-600 cursor-pointer"
+                                onClick={() => setDropdownOpen(prev => !prev)}
+                            />
+                            {isDropdownOpen && (
+                                <div className="absolute right-0 mt-2 w-40 bg-[#1B1B1B] border border-white/10 rounded-lg shadow-lg p-1 z-50">
+                                    <Link
+                                        to="/profile"
+                                        className="flex rounded items-center gap-2 px-4 py-2 hover:bg-white/10 text-gray-200 text-sm font-normal"
+                                        onClick={() => setDropdownOpen(false)}
+                                    >
+                                        <span>👤</span> View Profile
+                                    </Link>
+                                    <button
+                                        onClick={() => {
+                                            // Your logout logic here
+                                            console.log("Logging out...");
+                                            setDropdownOpen(false);
+                                        }}
+                                        className="flex rounded items-center gap-2 w-full text-left px-4 py-2 hover:bg-white/10 text-gray-200 text-sm font-normal"
+                                    >
+                                        <span>↩️</span> Log out
+                                    </button>
+                                </div>
+                            )}
+                        </div>
+                    ) : (
+                        <button className="bg-white/10 px-4 py-1.5 rounded text-white font-semibold flex items-center gap-2">
+                            🚀 Join the Community
+                        </button>
+                    )
+                }
+
             </div>
         </header>
     );

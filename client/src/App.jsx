@@ -8,8 +8,12 @@ import CreatePage from './pages/CreatePage'
 import SidebarLayout from './components/SidebarLayout'
 import Signup from './pages/Signup'
 import axios from 'axios';
+import { useAuth } from './context/authContext'
 
 const App = () => {
+  const {user} = useAuth();
+  console.log(user);
+  
 
   return (
     <div>
