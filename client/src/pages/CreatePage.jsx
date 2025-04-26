@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Editor from "@monaco-editor/react";
 import ElementType from "../components/ElementType";
 import axios from "axios";
+import SaveElementModal from "../components/SaveElementModal";
 
 const defaultTemplates = {
     button: {
@@ -32,6 +33,7 @@ const CreatePage = () => {
     const [isOpen, setIsOpen] = useState(true);
     const [bgColor, setBgColor] = useState("#e8e8e8");
     const [currentTab, setCurrentTab] = useState("html");
+    const [saveModalOpen, setSaveModalOpen] = useState(false);
 
     const [formData, setFormdata] = useState({
         id: crypto.randomUUID(),
@@ -69,24 +71,24 @@ const CreatePage = () => {
         }
     }, [formData.type, formData.framework]);
 
-    const handleSave = async () => {
-        if (!postTitle) {
-            console.log("Enter Title");
+    const handleSave = async ({ title, tags }) => {
+        if (!title) {
+            console.log("No title entered");
             return;
         }
 
         const newElement = {
-            title: postTitle,
+            title: title,
             html: formData.html,
             css: formData.framework === "tailwindcss" ? "" : formData.css,
             framework: formData.framework,
             bgcolor: bgColor,
-            tags: formData.tags || [], // optional: add tags support
+            tags: tags || [],
         };
 
         try {
             const res = await axios.post(import.meta.env.VITE_BACKEND_URL + "/api/elements", newElement, {
-                withCredentials: true, // send cookie (JWT)
+                withCredentials: true,
             });
 
             if (res.status === 201) {
@@ -98,6 +100,7 @@ const CreatePage = () => {
             alert("Failed to save element.");
         }
     };
+
 
 
     const combinedCode = `
@@ -220,18 +223,19 @@ const CreatePage = () => {
 
             {/* Footer */}
             <div className="mt-5 flex justify-end gap-4">
-                <input
+                {/* <input
                     type="text"
                     placeholder="Enter post title"
                     onChange={(e) => setPostTitle(e.target.value)}
                     className="py-2 px-3 rounded text-black"
-                />
+                /> */}
                 <button
-                    onClick={handleSave}
+                    onClick={() => setSaveModalOpen(true)}
                     className="bg-[#4E46E5] hover:bg-indigo-700 text-white px-4 py-2 rounded-md text-lg"
                 >
                     Save UI
                 </button>
+
             </div>
 
             {isOpen && (
@@ -242,6 +246,13 @@ const CreatePage = () => {
                     setFormdata={setFormdata}
                 />
             )}
+
+            <SaveElementModal
+                isOpen={saveModalOpen}
+                setIsOpen={setSaveModalOpen}
+                onSave={handleSave}
+            />
+
         </div>
     );
 };
