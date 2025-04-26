@@ -32,7 +32,7 @@ export const AuthProvider = ({ children }) => {
 
     // Expose these through context
     return (
-        <AuthContext.Provider value={{ user, loading, setUser, setLoading }}>
+        <AuthContext.Provider value={{ user, loading, setUser, setLoading, }}>
             {children}
         </AuthContext.Provider>
     );

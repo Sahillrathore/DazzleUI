@@ -114,7 +114,9 @@ export default function Header() {
                             )}
                         </div>
                     ) : (
-                        <button className="bg-white/10 px-4 py-1.5 rounded text-white font-semibold flex items-center gap-2">
+                        <button className="bg-white/10 px-4 py-1.5 rounded text-white font-semibold flex items-center gap-2"
+                        onClick={()=>navigate('/signup')}
+                        >
                             🚀 Join the Community
                         </button>
                     )
