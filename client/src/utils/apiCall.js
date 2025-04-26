@@ -15,3 +15,11 @@ export const getUserElements = async (userId) => {
     });
     return res.data;
 };
+
+
+export const logoutUser = async () => {
+    const res = await axios.get(import.meta.env.VITE_BACKEND_URL + "/auth/logout", {
+        withCredentials: true,
+    });
+    return res.data;
+};

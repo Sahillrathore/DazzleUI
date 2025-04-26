@@ -76,7 +76,7 @@ app.get("/auth/google/callback",
 
         res.cookie("token", token, {
             httpOnly: true,
-            secure: false, // set true in production
+            secure: process.env.NODE_ENV === "production", // set true in production
             sameSite: "Lax",
         });
 
@@ -86,9 +86,12 @@ app.get("/auth/google/callback",
 
 
 app.get("/auth/logout", (req, res) => {
-    req.logout(() => {
-        res.redirect("/");
+    res.clearCookie("token", {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production", // send only over HTTPS in production
+        sameSite: "strict",
     });
+    res.status(200).json({ message: "Logged out successfully" });
 });
 
 app.use('/api/elements', elementsRouter)

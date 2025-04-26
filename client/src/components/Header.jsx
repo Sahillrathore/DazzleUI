@@ -1,17 +1,33 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/authContext";
+import { logoutUser } from "../utils/apiCall";
 
 export default function Header() {
     const [isMegaMenuOpen, setMegaMenuOpen] = useState(false);
     const [isDropdownOpen, setDropdownOpen] = useState(false);
 
-    const { user } = useAuth();
+    const { user, setUser } = useAuth();
+    
     const navigate = useNavigate();
 
     const handleCreate = () => {
         navigate(user ? "/create" : "/signup");
     };
+
+
+    const logout = async () => {
+        console.log("Logging out...");
+        try {
+            await logoutUser();
+            setUser(null);
+            setDropdownOpen(false);
+            navigate('/');
+
+        } catch (err) {
+            console.error("Logout error", err)
+        }
+    }
 
     return (
         <header className="bg-transparent text-white  px-6 py-4 flex items-center justify-between shadow-md">
@@ -76,7 +92,7 @@ export default function Header() {
                         <div className="relative">
                             <img
                                 src={user.avatar}
-                                className="rounded-full w-10 border border-gray-600 cursor-pointer"
+                                className="rounded-full w-10 h-10 border border-gray-600 cursor-pointer"
                                 onClick={() => setDropdownOpen(prev => !prev)}
                             />
                             {isDropdownOpen && (
@@ -89,11 +105,7 @@ export default function Header() {
                                         <span>👤</span> View Profile
                                     </Link>
                                     <button
-                                        onClick={() => {
-                                            // Your logout logic here
-                                            console.log("Logging out...");
-                                            setDropdownOpen(false);
-                                        }}
+                                        onClick={logout}
                                         className="flex rounded items-center gap-2 w-full text-left px-4 py-2 hover:bg-white/10 text-gray-200 text-sm font-normal"
                                     >
                                         <span>↩️</span> Log out
