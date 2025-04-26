@@ -10,6 +10,7 @@ const createToken = require("./utils/createToken");
 const verifyToken = require("./middlewares/verifyToken");
 const auth = require("./middleware/auth");
 const elementsRouter = require('./routes/elements')
+const favoriteRouter = require('./routes/addfavorite')
 
 const app = express();
 
@@ -80,7 +81,7 @@ app.get("/auth/google/callback",
             sameSite: "Lax",
         });
 
-        res.redirect("http://localhost:5175/create"); // or your dashboard route
+        res.redirect("http://localhost:5175/"); // or your dashboard route
     }
 );
 
@@ -95,11 +96,13 @@ app.get("/auth/logout", (req, res) => {
 });
 
 app.use('/api/elements', elementsRouter)
+app.use('/api/users', favoriteRouter)
 
 // JWT-protected route
 app.get("/auth/user", verifyToken, (req, res) => {
-    console.log("Decoded user:", req.user); // check what's inside
-    res.json({ ...req.user, loggedin: true });
+    console.log(req.user);
+    
+    res.json({ ...req.user });
 });
 
 
