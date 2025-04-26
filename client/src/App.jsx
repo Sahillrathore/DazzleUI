@@ -7,13 +7,9 @@ import ProtectedRoute from './components/ProtectedRoute'
 import CreatePage from './pages/CreatePage'
 import SidebarLayout from './components/SidebarLayout'
 import Signup from './pages/Signup'
-import axios from 'axios';
-import { useAuth } from './context/authContext'
+import ProfilePage from './pages/ProfilePage'
 
 const App = () => {
-  const {user} = useAuth();
-  console.log(user);
-  
 
   return (
     <div>
@@ -26,6 +22,7 @@ const App = () => {
         <Route element={<SidebarLayout />}>
           <Route path="/elements" element={<Elements />} />
           <Route path="/create" element={<ProtectedRoute><CreatePage /></ProtectedRoute>} />
+          <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
         </Route>
       </Routes>
     </div>
