@@ -1,14 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Editor from "@monaco-editor/react";
-import { FaRegCopy, FaRegHeart } from "react-icons/fa";
 import { BiExport } from "react-icons/bi";
 import { BsStars } from "react-icons/bs";
+import { FaRegCopy, FaRegHeart, FaHeart } from "react-icons/fa";
 import { CgMaximize } from "react-icons/cg";
+import { useAuth } from "../context/authContext";
+import { addFavorite, getFavorites, removeFavorite } from "../utils/apiCall"; // import removeFavorite
 
 const Card = ({ element }) => {
+
+    const { user, setUser } = useAuth();
     const [open, setOpen] = useState(false);
     const [tab, setTab] = useState("html");
     const [bgColor, setBgColor] = useState(element.bgcolor || '#e8e8e8');
+    const [favorites, setFavorites] = useState([]);
+    const [isFavorited, setIsFavorited] = useState(false); // Initially false
 
     const hasCSS = element.framework === "css" && element.css;
 
@@ -34,11 +40,50 @@ const Card = ({ element }) => {
       <body>${element.html}</body>
     </html>
   `;
-
+  
     const copyToClipboard = (code) => {
         navigator.clipboard.writeText(code);
         alert("Copied to clipboard!");
     };
+
+    const fetchFavorites = async () => {
+        try {
+            const favs = await getFavorites(user?._id);
+            const favIds = favs.map(el => el._id.toString());
+            setFavorites(favIds);
+        } catch (err) {
+            console.error("Failed to fetch favorites", err);
+        }
+    };
+
+    const toggleFavorite = async (e) => {
+        e.stopPropagation();
+        try {
+            if (!isFavorited) {
+                await addFavorite(user._id, element._id);
+                setFavorites(prev => [...prev, element._id]);
+                setIsFavorited(true);
+            } else {
+                await removeFavorite(user._id, element._id);
+                setFavorites(prev => prev.filter(favId => favId.toString() !== element._id.toString()));
+                setIsFavorited(false);
+            }
+        } catch (err) {
+            console.error("Failed to toggle favorite", err);
+            alert("Something went wrong");
+        }
+    };
+
+    useEffect(() => {
+        fetchFavorites();
+    }, []);
+
+    // Watch favorites and set isFavorited whenever favorites change
+    useEffect(() => {
+        if (favorites.length > 0) {
+            setIsFavorited(favorites.includes(element._id));
+        }
+    }, [favorites, element._id]);
 
     return (
         <>
@@ -79,7 +124,7 @@ const Card = ({ element }) => {
                                 </button>
                                 <span className="text-sm text-gray-400">|</span>
                                 <span className="text-sm text-white font-medium">{element.title}</span>
-                               
+
                                 <span className="text-xs text-gray-500 ml-4">
                                     👁 {element.views || 0}
                                 </span>
@@ -90,7 +135,7 @@ const Card = ({ element }) => {
                                 <span className=" text-gray-500 ml-2 text-lg">
                                     by <span className="text-indigo-400">{element.createdBy}</span>
                                 </span>
-                                
+
                                 <span className="text-gray-300 text-sm">{bgColor}</span>
                                 <input
                                     type="color"
@@ -120,8 +165,8 @@ const Card = ({ element }) => {
                                     <button
                                         onClick={() => setTab("html")}
                                         className={`px-4 py-2 flex items-center gap-2 ${tab === "html"
-                                                ? "bg-[#1e1e1e] text-white border-b-2 border-white"
-                                                : "text-gray-400 hover:text-white"
+                                            ? "bg-[#1e1e1e] text-white border-b-2 border-white"
+                                            : "text-gray-400 hover:text-white"
                                             }`}
                                     >
                                         <img
@@ -135,8 +180,8 @@ const Card = ({ element }) => {
                                         <button
                                             onClick={() => setTab("css")}
                                             className={`px-4 py-2 flex items-center gap-2 ${tab === "css"
-                                                    ? "bg-[#1e1e1e] text-white border-b-2 border-white"
-                                                    : "text-gray-400 hover:text-white"
+                                                ? "bg-[#1e1e1e] text-white border-b-2 border-white"
+                                                : "text-gray-400 hover:text-white"
                                                 }`}
                                         >
                                             <img
@@ -181,8 +226,12 @@ const Card = ({ element }) => {
                         {/* === Bottom Action Bar === */}
                         <div className="px-5 py-4 bg-black border-t border-gray-800 flex justify-between">
                             <div className="flex items-center gap-4 text-gray-400 text-sm">
-                                <button className="flex items-center gap-2 hover:text-white">
-                                    <FaRegHeart /> Save to favorites
+                                <button
+                                    className="flex items-center gap-2 hover:text-white"
+                                    onClick={toggleFavorite}
+                                >
+                                    {isFavorited ? <FaHeart className="text-red-500" /> : <FaRegHeart />}
+                                    {isFavorited ? "Favorited" : "Save to favorites"}
                                 </button>
                                 <button className="flex items-center gap-2 hover:text-white">
                                     <img
