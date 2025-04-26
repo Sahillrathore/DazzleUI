@@ -5,13 +5,12 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
-    const [loading, setLoading] = useState(true); // true until we check
+    const [loading, setLoading] = useState(true); // true until we check    
 
     // Check auth status on mount
     useEffect(() => {
         const checkAuth = async () => {
             try {
-                console.log(import.meta.env.VITE_BACKEND_URL+'/auth/user');
                 const res = await fetch(import.meta.env.VITE_BACKEND_URL+"/auth/user", {
                     credentials: "include", // important for sending cookies
                 });
