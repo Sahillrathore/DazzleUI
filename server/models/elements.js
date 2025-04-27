@@ -9,6 +9,7 @@ const elementSchema = new mongoose.Schema({
     bgcolor: String,
     createdBy: String,
     tags: [String],
+    type: String,
     likes: { type: Number, default: 0 },
     views: { type: Number, default: 0 },
     createdAt: { type: Date, default: Date.now },

@@ -4,14 +4,14 @@ const Element = require("../models/elements");
 const auth = require("../middleware/auth");
 
 // GET all elements (public)
-router.get("/", async (req, res) => {
-    try {
-        const elements = await Element.find().sort({ createdAt: -1 }).populate("userId", "name avatar");
-        res.json(elements);
-    } catch (err) {
-        res.status(500).json({ error: "Failed to fetch elements" });
-    }
-});
+// router.get("/", async (req, res) => {
+//     try {
+//         const elements = await Element.find().sort({ createdAt: -1 }).populate("userId", "name avatar");
+//         res.json(elements);
+//     } catch (err) {
+//         res.status(500).json({ error: "Failed to fetch elements" });
+//     }
+// });
 
 // GET elements by user ID
 router.get("/user/:userId", async (req, res) => {
@@ -23,9 +23,27 @@ router.get("/user/:userId", async (req, res) => {
     }
 });
 
+router.get('/', async (req, res) => {
+    try {
+        const { type } = req.query;
+        let query = {};
+
+        if (type) {
+            query.type = type; // 👈 filter by type field
+        }
+
+        const elements = await Element.find(query).sort({ createdAt: -1 });
+        res.json(elements);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Server error');
+    }
+});
+
+
 // POST create new element (auth required)
 router.post("/", auth, async (req, res) => {
-    const { title, html, css, framework, bgcolor, createdBy,tags } = req.body;
+    const { title, html, css, framework, bgcolor, createdBy,tags, type } = req.body;
 
     try {
         
@@ -35,6 +53,7 @@ router.post("/", auth, async (req, res) => {
             html,
             css,
             framework,
+            type,
             bgcolor,
             createdBy: req.user.name,
             tags,
