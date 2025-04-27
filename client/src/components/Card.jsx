@@ -7,7 +7,7 @@ import { CgMaximize } from "react-icons/cg";
 import { useAuth } from "../context/authContext";
 import { addFavorite, getFavorites, removeFavorite } from "../utils/apiCall"; // import removeFavorite
 
-const Card = ({ element }) => {
+const Card = ({ element }) => { 
 
     const { user, setUser } = useAuth();
     const [open, setOpen] = useState(false);

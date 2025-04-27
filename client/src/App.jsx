@@ -8,6 +8,7 @@ import CreatePage from './pages/CreatePage'
 import SidebarLayout from './components/SidebarLayout'
 import Signup from './pages/Signup'
 import ProfilePage from './pages/ProfilePage'
+import ParticularElements from './pages/ParticularElements'
 
 const App = () => {
 
@@ -21,6 +22,7 @@ const App = () => {
         {/* Routes with sidebar */}
         <Route element={<SidebarLayout />}>
           <Route path="/elements" element={<Elements />} />
+          <Route path="/elements/:elem" element={<ParticularElements />} />
           <Route path="/create" element={<ProtectedRoute><CreatePage /></ProtectedRoute>} />
           <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
         </Route>
