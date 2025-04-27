@@ -34,10 +34,10 @@ const CreatePage = () => {
     const [bgColor, setBgColor] = useState("#e8e8e8");
     const [currentTab, setCurrentTab] = useState("html");
     const [saveModalOpen, setSaveModalOpen] = useState(false);
+    const [elementType, setElementType] = useState('');
 
     const [formData, setFormdata] = useState({
         id: crypto.randomUUID(),
-        name: "",
         type: "button",
         framework: "css", // "css" | "tailwindcss"
         html: defaultTemplates.button.css.html,
@@ -81,6 +81,7 @@ const CreatePage = () => {
             title: title,
             html: formData.html,
             css: formData.framework === "tailwindcss" ? "" : formData.css,
+            type: formData.type,
             framework: formData.framework,
             bgcolor: bgColor,
             tags: tags || [],
@@ -244,6 +245,8 @@ const CreatePage = () => {
                     setIsOpen={setIsOpen}
                     formData={formData}
                     setFormdata={setFormdata}
+                    elementType={elementType}
+                    setElementType={setElementType}
                 />
             )}
 
@@ -251,6 +254,8 @@ const CreatePage = () => {
                 isOpen={saveModalOpen}
                 setIsOpen={setSaveModalOpen}
                 onSave={handleSave}
+                formData={formData}
+                setFormdata={setFormdata}
             />
 
         </div>

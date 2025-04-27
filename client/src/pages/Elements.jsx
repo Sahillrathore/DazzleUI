@@ -20,7 +20,7 @@ function Elements() {
     return (
         <div className="flex min-h-screen text-white">
 
-            <div className="flex-1 py-6 px-4">
+            <div className="flex-1 py-5 px-4">
                 <div className="flex justify-between items-center flex-wrap gap-4 mb-6">
                     <h1 className="text-3xl text-gray-200 font-bold">Browse all</h1>
 
