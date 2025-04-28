@@ -45,7 +45,7 @@ const ProfilePage = () => {
             {/* Profile Header */}
             <div className="flex items-center gap-6 mb-8">
                 <img
-                    src={user?.avatar || "https://via.placeholder.com/150"}
+                    src={"https://img.freepik.com/premium-vector/character-avatar-isolated_729149-194801.jpg?semt=ais_hybrid&w=740"}
                     alt="Profile"
                     className="w-28 h-28 rounded-lg object-cover"
                 />

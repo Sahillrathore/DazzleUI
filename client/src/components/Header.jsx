@@ -2,13 +2,15 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/authContext";
 import { logoutUser } from "../utils/apiCall";
+import { FaRegUser } from "react-icons/fa";
+import { AiOutlineLogout } from "react-icons/ai";
 
 export default function Header() {
     const [isMegaMenuOpen, setMegaMenuOpen] = useState(false);
     const [isDropdownOpen, setDropdownOpen] = useState(false);
 
     const { user, setUser } = useAuth();
-    
+
     const navigate = useNavigate();
 
     const handleCreate = () => {
@@ -91,7 +93,7 @@ export default function Header() {
                     user ? (
                         <div className="relative">
                             <img
-                                src={user.avatar}
+                                src={'https://img.freepik.com/premium-vector/character-avatar-isolated_729149-194801.jpg?semt=ais_hybrid&w=740'}
                                 className="rounded-full w-10 h-10 border border-gray-600 cursor-pointer"
                                 onClick={() => setDropdownOpen(prev => !prev)}
                             />
@@ -102,20 +104,20 @@ export default function Header() {
                                         className="flex rounded items-center gap-2 px-4 py-2 hover:bg-white/10 text-gray-200 text-sm font-normal"
                                         onClick={() => setDropdownOpen(false)}
                                     >
-                                        <span>👤</span> View Profile
+                                        <span><FaRegUser /></span> View Profile
                                     </Link>
                                     <button
                                         onClick={logout}
                                         className="flex rounded items-center gap-2 w-full text-left px-4 py-2 hover:bg-white/10 text-gray-200 text-sm font-normal"
                                     >
-                                        <span>↩️</span> Log out
+                                        <span><AiOutlineLogout /></span> Log out
                                     </button>
                                 </div>
                             )}
                         </div>
                     ) : (
                         <button className="bg-white/10 px-4 py-1.5 rounded text-white font-semibold flex items-center gap-2"
-                        onClick={()=>navigate('/signup')}
+                            onClick={() => navigate('/signup')}
                         >
                             🚀 Join the Community
                         </button>
