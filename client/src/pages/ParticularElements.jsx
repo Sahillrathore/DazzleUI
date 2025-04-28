@@ -2,15 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import Card from '../components/Card';
+import { useAuth } from '../context/authContext';
+import LoadingSpinner from '../components/Loading';
 
 const ParticularElements = () => {
     const { type } = useParams(); // 👈 grabs 'button', 'checkbox' etc from URL
     const [elements, setElements] = useState([]);
     const [search, setSearch] = useState("");
-
+    const {loading, setLoading} = useAuth();
 
     useEffect(() => {
         const fetchElements = async () => {
+            setLoading(true);
             try {
                 let url = 'http://localhost:5000/api/elements';
                 console.log(type);
@@ -23,6 +26,7 @@ const ParticularElements = () => {
             } catch (err) {
                 console.error(err);
             }
+            setLoading(false)
         };
 
         fetchElements();
@@ -34,6 +38,9 @@ const ParticularElements = () => {
 
     return (
         <div className="p-4">
+            {
+                loading && <LoadingSpinner />
+            }
             <div className="flex items-center justify-between mt-1 mb-6">
                 <h1 className="text-3xl mt-0 font-bold text-gray-200 capitalize mb-0">{type ? `${type} Elements` : "All Elements"}</h1>
 
