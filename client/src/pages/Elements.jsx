@@ -2,16 +2,12 @@ import React, { useState, useEffect } from "react";
 import Sidebar from "../components/Sidebar";
 import Card from "../components/Card";
 import { getAllElements } from "../utils/apiCall";
+import { useAuth } from "../context/authContext";
+import LoadingSpinner from "../components/Loading";
 
 function Elements() {
+    const { loading, setLoading, allElements, } = useAuth();
     const [search, setSearch] = useState("");
-    const [allElements, setAllElements] = useState([]);
-
-    useEffect(() => {
-        getAllElements()
-            .then(setAllElements)
-            .catch((err) => console.error("Failed to fetch elements", err));
-    }, []);
 
     const filtered = allElements.filter((el) =>
         el.title.toLowerCase().includes(search.toLowerCase())
@@ -19,6 +15,9 @@ function Elements() {
 
     return (
         <div className="flex min-h-screen text-white">
+            {
+                loading && <LoadingSpinner/>
+            }
 
             <div className="flex-1 py-5 px-4">
                 <div className="flex justify-between items-center flex-wrap gap-4 mb-6">
