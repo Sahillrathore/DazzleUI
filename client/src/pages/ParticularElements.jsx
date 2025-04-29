@@ -55,7 +55,7 @@ const ParticularElements = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {filtered.map((el) => (
-                    <Card element={el} />
+                    <Card element={el} key={el._id} />
                 ))}
             </div>
         </div>
