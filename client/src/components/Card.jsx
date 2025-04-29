@@ -12,7 +12,7 @@ const Card = ({ element }) => {
     const { user, setUser } = useAuth();
     const [open, setOpen] = useState(false);
     const [tab, setTab] = useState("html");
-    const [bgColor, setBgColor] = useState(element.bgcolor || '#e8e8e8');
+    const [bgColor, setBgColor] = useState(element?.bgcolor || '#e8e8e8');
     const [favorites, setFavorites] = useState([]);
     const [isFavorited, setIsFavorited] = useState(false); // Initially false
 
@@ -47,6 +47,7 @@ const Card = ({ element }) => {
     };
 
     const fetchFavorites = async () => {
+        if (!user) return;
         try {
             const favs = await getFavorites(user?._id);
             const favIds = favs.map(el => el._id.toString());
