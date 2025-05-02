@@ -9,6 +9,8 @@ export const AuthProvider = ({ children }) => {
     //global state to manage the elements 
     const [allElements, setAllElements] = useState([]);
     const [loading, setLoading] = useState(true); // true until we check    
+    const [notification, setNotification] = useState(null);
+
 
     // Check auth status on mount
     useEffect(() => {
@@ -48,7 +50,12 @@ export const AuthProvider = ({ children }) => {
 
     // Expose these through context
     return (
-        <AuthContext.Provider value={{ user, loading, setUser, setLoading, allElements, setAllElements }}>
+        <AuthContext.Provider value={{
+            user, loading,
+            setUser, setLoading,
+            allElements, setAllElements,
+            notification, setNotification
+        }}>
             {children}
         </AuthContext.Provider>
     );

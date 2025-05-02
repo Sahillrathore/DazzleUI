@@ -4,6 +4,7 @@ import ElementType from "../components/ElementType";
 import axios from "axios";
 import SaveElementModal from "../components/SaveElementModal";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/authContext";
 
 const defaultTemplates = {
     button: {
@@ -41,7 +42,8 @@ const defaultTemplates = {
 };
 
 const CreatePage = () => {
-    const [postTitle, setPostTitle] = useState("");
+
+    const {user, setNotification} = useAuth();
     const [isOpen, setIsOpen] = useState(true);
     const [bgColor, setBgColor] = useState("#e8e8e8");
     const [currentTab, setCurrentTab] = useState("html");
@@ -85,6 +87,11 @@ const CreatePage = () => {
     }, [formData.type, formData.framework]);
 
     const handleSave = async ({ title, tags }) => {
+
+        if(!user) {
+            setNotification({msg: 'Please login first', type: 'error'})
+            return;
+        }
         if (!title) {
             console.log("No title entered");
             return;
