@@ -40,10 +40,10 @@ export default function Header() {
 
                 <div
                     className="relative group"
-                    onMouseEnter={() => setMegaMenuOpen(true)}
-                    onMouseLeave={() => setMegaMenuOpen(false)}
+                    // onMouseEnter={() => setMegaMenuOpen(true)}
+                    // onMouseLeave={() => setMegaMenuOpen(false)}
                 >
-                    <button className="px-3 py-1 rounded hover:bg-white/10 transition font-medium">Elements ▾</button>
+                    <Link to='/elements' className="px-3 py-1 rounded hover:bg-white/10 transition font-medium">Elements ▾</Link>
 
                     {isMegaMenuOpen && (
                         <div className="absolute top-[35px] left-0 z-50 bg-zinc-900 p-4 rounded-xl shadow-lg w-[750px] grid grid-cols-3 gap-2 border-4 border-white/10 ">
@@ -81,8 +81,8 @@ export default function Header() {
 
                 <a className="px-3 py-1 rounded hover:bg-white/10 transition font-medium">Challenges <span className="text-green-500">•</span></a>
                 <a className="px-3 py-1 rounded hover:bg-white/10 transition font-medium">Spotlight</a>
-                <a className="px-3 py-1 rounded hover:bg-white/10 transition font-medium">Blog</a>
-                <a className="px-3 py-1 rounded hover:bg-white/10 transition font-medium">{user?.name}</a>
+                {/* <a className="px-3 py-1 rounded hover:bg-white/10 transition font-medium">Blog</a> */}
+                {/* <a className="px-3 py-1 rounded hover:bg-white/10 transition font-medium">{user?.name}</a> */}
             </div>
 
             <div className="flex gap-4">
