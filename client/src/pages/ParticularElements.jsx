@@ -53,11 +53,18 @@ const ParticularElements = () => {
                 />
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {filtered.map((el) => (
-                    <Card element={el} key={el._id} />
-                ))}
-            </div>
+            {filtered.length === 0 && !loading ? (
+                <div className="text-gray-400 text-center text-lg mt-12">
+                    No elements found
+                </div>
+            ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {filtered.map((el) => (
+                        <Card element={el} key={el._id} />
+                    ))}
+                </div>
+            )}
+
         </div>
     );
 };
