@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { FaToggleOn, FaCheckSquare, FaRegSquare, FaCreditCard, FaSpinner, FaKeyboard, FaWpforms, FaGripLines, FaDotCircle, FaCommentDots, FaRegCircle } from 'react-icons/fa';
 import { RxButton, RxCross1, RxCross2 } from 'react-icons/rx';
 import { RiToggleLine } from 'react-icons/ri';
 import { IoMdSwitch, IoMdCheckboxOutline } from 'react-icons/io';
 import { FiLoader } from 'react-icons/fi';
-import { IoDocumentOutline } from 'react-icons/io5';
+import { MdOutlinePowerInput } from "react-icons/md";
 
 const elementsTypes = [
     {
@@ -33,9 +32,9 @@ const elementsTypes = [
         icon: <FiLoader size={40} />
     },
     {
-        name: "Form",
-        value: "form",
-        icon: <IoDocumentOutline size={40} />
+        name: "Input",
+        value: "input",
+        icon: <MdOutlinePowerInput size={40} />
     },
 ];
 

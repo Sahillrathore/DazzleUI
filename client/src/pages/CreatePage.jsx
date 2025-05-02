@@ -3,6 +3,7 @@ import Editor from "@monaco-editor/react";
 import ElementType from "../components/ElementType";
 import axios from "axios";
 import SaveElementModal from "../components/SaveElementModal";
+import { useNavigate } from "react-router-dom";
 
 const defaultTemplates = {
     button: {
@@ -25,6 +26,17 @@ const defaultTemplates = {
             css: ``
         }
     },
+    input: {
+        css: {
+            html: `<input type="<input_type>" class="<your-class>" placeholder="Enter something" />`,
+            css: `.your-class { font-size: 16px; padding: 8px; }`
+        },
+        tailwindcss: {
+            html: `<input type="<input_type>" class="text-base px-2 py-1 border border-gray-300 rounded" placeholder="Enter something" />`,
+            css: ``
+        }
+    }
+
     // Add more element types...
 };
 
@@ -35,6 +47,7 @@ const CreatePage = () => {
     const [currentTab, setCurrentTab] = useState("html");
     const [saveModalOpen, setSaveModalOpen] = useState(false);
     const [elementType, setElementType] = useState('');
+    const navigate = useNavigate();
 
     const [formData, setFormdata] = useState({
         id: crypto.randomUUID(),
@@ -94,6 +107,7 @@ const CreatePage = () => {
 
             if (res.status === 201) {
                 alert("UI Element saved to server!");
+                navigate('/elements')
                 console.log(res.data.element);
             }
         } catch (err) {
