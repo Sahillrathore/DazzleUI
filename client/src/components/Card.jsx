@@ -6,10 +6,12 @@ import { FaRegCopy, FaRegHeart, FaHeart } from "react-icons/fa";
 import { CgMaximize } from "react-icons/cg";
 import { useAuth } from "../context/authContext";
 import { addFavorite, getFavorites, removeFavorite } from "../utils/apiCall"; // import removeFavorite
+import { useNavigate } from "react-router-dom";
 
 const Card = ({ element }) => { 
 
     const { user, setUser } = useAuth();
+    const navigate = useNavigate();
     const [open, setOpen] = useState(false);
     const [tab, setTab] = useState("html");
     const [bgColor, setBgColor] = useState(element?.bgcolor || '#e8e8e8');
@@ -50,7 +52,7 @@ const Card = ({ element }) => {
         if (!user) return;
         try {
             const favs = await getFavorites(user?._id);
-            const favIds = favs.map(el => el._id.toString());
+            const favIds = favs.map(el => el?._id.toString());
             setFavorites(favIds);
         } catch (err) {
             console.error("Failed to fetch favorites", err);
@@ -58,15 +60,21 @@ const Card = ({ element }) => {
     };
 
     const toggleFavorite = async (e) => {
+
+        if(!user) {
+            navigate('/signup')
+            return;
+        }
+        
         e.stopPropagation();
         try {
             if (!isFavorited) {
-                await addFavorite(user._id, element._id);
-                setFavorites(prev => [...prev, element._id]);
+                await addFavorite(user?._id, element?._id);
+                setFavorites(prev => [...prev, element?._id]);
                 setIsFavorited(true);
             } else {
-                await removeFavorite(user._id, element._id);
-                setFavorites(prev => prev.filter(favId => favId.toString() !== element._id.toString()));
+                await removeFavorite(user?._id, element?._id);
+                setFavorites(prev => prev.filter(favId => favId.toString() !== element?._id.toString()));
                 setIsFavorited(false);
             }
         } catch (err) {
