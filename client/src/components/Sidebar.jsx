@@ -38,12 +38,22 @@ const Sidebar = () => {
                 <div
                     key={cat.name}
                     onClick={() => navigate(cat.link)}
-                    className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-[#222] cursor-pointer transition"
+                    className="group flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-[#222] cursor-pointer transition relative"
                 >
-                    {cat.icon}
+                    <div className="relative">
+                        {cat.icon}
+
+                        {/* Custom tooltip */}
+                        {collapsed && (
+                            <div className="absolute left-full top-1/2 -translate-y-1/2 ml-2 whitespace-nowrap bg-gray-800 text-white text-sm px-2 py-1 rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity z-10">
+                                {cat.name}
+                            </div>
+                        )}
+                    </div>
                     {!collapsed && <span>{cat.name}</span>}
                 </div>
             ))}
+
 
             {/* Toggle Button */}
             <button
