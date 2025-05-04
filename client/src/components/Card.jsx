@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Editor from "@monaco-editor/react";
 import { BiExport } from "react-icons/bi";
-import { BsStars } from "react-icons/bs";
 import { FaRegCopy, FaRegHeart, FaHeart } from "react-icons/fa";
 import { CgMaximize } from "react-icons/cg";
 import { useAuth } from "../context/authContext";
@@ -10,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 
 const Card = ({ element }) => { 
 
-    const { user, setUser } = useAuth();
+    const { user } = useAuth();
     const navigate = useNavigate();
     const [open, setOpen] = useState(false);
     const [tab, setTab] = useState("html");
