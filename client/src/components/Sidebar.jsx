@@ -45,7 +45,7 @@ const Sidebar = () => {
 
                         {/* Custom tooltip */}
                         {collapsed && (
-                            <div className="absolute left-full top-1/2 -translate-y-1/2 ml-2 whitespace-nowrap bg-gray-800 text-white text-sm px-2 py-1 rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity z-10">
+                            <div className="absolute left-full top-1/2 -translate-y-1/2 ml-2 whitespace-nowrap bg-black/40 text-white text-sm px-2 py-1 rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity z-10">
                                 {cat.name}
                             </div>
                         )}

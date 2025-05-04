@@ -43,7 +43,7 @@ export default function Header() {
                     // onMouseEnter={() => setMegaMenuOpen(true)}
                     // onMouseLeave={() => setMegaMenuOpen(false)}
                 >
-                    <Link to='/elements' className="px-3 py-1 rounded hover:bg-white/10 transition font-medium">Elements ▾</Link>
+                    <Link to='/elements' className="px-3 py-1 rounded hover:bg-white/10 transition font-medium">Elements </Link>
 
                     {isMegaMenuOpen && (
                         <div className="absolute top-[35px] left-0 z-50 bg-zinc-900 p-4 rounded-xl shadow-lg w-[750px] grid grid-cols-3 gap-2 border-4 border-white/10 ">
@@ -97,23 +97,25 @@ export default function Header() {
                                 className="rounded-full w-10 h-10 border border-gray-600 cursor-pointer"
                                 onClick={() => setDropdownOpen(prev => !prev)}
                             />
-                            {isDropdownOpen && (
-                                <div className="absolute right-0 mt-2 w-40 bg-[#1B1B1B] border border-white/10 rounded-lg shadow-lg p-1 z-50">
-                                    <Link
-                                        to="/profile"
-                                        className="flex rounded items-center gap-2 px-4 py-2 hover:bg-white/10 text-gray-200 text-sm font-normal"
-                                        onClick={() => setDropdownOpen(false)}
-                                    >
-                                        <span><FaRegUser /></span> View Profile
-                                    </Link>
-                                    <button
-                                        onClick={logout}
-                                        className="flex rounded items-center gap-2 w-full text-left px-4 py-2 hover:bg-white/10 text-gray-200 text-sm font-normal"
-                                    >
-                                        <span><AiOutlineLogout /></span> Log out
-                                    </button>
-                                </div>
-                            )}
+                            <div
+                                className={`absolute right-0 mt-4 w-40 bg-[#1B1B1B] border border-white/10 rounded-lg shadow-lg p-1 z-50 transform transition-all duration-200 ease-out origin-top ${isDropdownOpen ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"
+                                    }`}
+                            >
+                                <Link
+                                    to="/profile"
+                                    className="flex rounded items-center gap-2 px-4 py-2 hover:bg-white/10 text-gray-200 text-sm font-normal"
+                                    onClick={() => setDropdownOpen(false)}
+                                >
+                                    <span><FaRegUser /></span> View Profile
+                                </Link>
+                                <button
+                                    onClick={logout}
+                                    className="flex rounded items-center gap-2 w-full text-left px-4 py-2 hover:bg-white/10 text-gray-200 text-sm font-normal"
+                                >
+                                    <span><AiOutlineLogout /></span> Log out
+                                </button>
+                            </div>
+
                         </div>
                     ) : (
                         <button className="bg-white/10 px-4 py-1.5 rounded text-white font-semibold flex items-center gap-2"
