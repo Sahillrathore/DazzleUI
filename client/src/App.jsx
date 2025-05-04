@@ -30,7 +30,7 @@ const App = () => {
         {/* Routes with sidebar */}
         <Route element={<SidebarLayout />}>
           <Route path="/elements" element={<Elements />} />
-          <Route path="/elements/:type " element={<ParticularElements />} />
+          <Route path="/elements/:type" element={<ParticularElements />} />
           <Route path="/create" element={<ProtectedRoute><CreatePage /></ProtectedRoute>} />
           <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
         </Route>
