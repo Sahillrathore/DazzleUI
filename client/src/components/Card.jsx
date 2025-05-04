@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Editor from "@monaco-editor/react";
 import { BiExport } from "react-icons/bi";
 import { FaRegCopy, FaRegHeart, FaHeart } from "react-icons/fa";
@@ -7,7 +7,7 @@ import { useAuth } from "../context/authContext";
 import { addFavorite, getFavorites, removeFavorite } from "../utils/apiCall"; // import removeFavorite
 import { useNavigate } from "react-router-dom";
 
-const Card = ({ element }) => { 
+const Card = ({ element }) => {
 
     const { user } = useAuth();
     const navigate = useNavigate();
@@ -16,6 +16,8 @@ const Card = ({ element }) => {
     const [bgColor, setBgColor] = useState(element?.bgcolor || '#e8e8e8');
     const [favorites, setFavorites] = useState([]);
     const [isFavorited, setIsFavorited] = useState(false); // Initially false
+
+    const modalRef = useRef(null);
 
     const hasCSS = element.framework === "css" && element.css;
 
@@ -41,7 +43,7 @@ const Card = ({ element }) => {
       <body>${element.html}</body>
     </html>
   `;
-  
+
     const copyToClipboard = (code) => {
         navigator.clipboard.writeText(code);
         alert("Copied to clipboard!");
@@ -60,11 +62,11 @@ const Card = ({ element }) => {
 
     const toggleFavorite = async (e) => {
 
-        if(!user) {
+        if (!user) {
             navigate('/signup')
             return;
         }
-        
+
         e.stopPropagation();
         try {
             if (!isFavorited) {
@@ -79,6 +81,18 @@ const Card = ({ element }) => {
         } catch (err) {
             console.error("Failed to toggle favorite", err);
             alert("Something went wrong");
+        }
+    };
+
+    const handleMaximize = () => {
+        if (modalRef.current) {
+            if (document.fullscreenElement) {
+                document.exitFullscreen();
+            } else {
+                modalRef.current.requestFullscreen().catch((err) => {
+                    console.error("Fullscreen error:", err);
+                });
+            }
         }
     };
 
@@ -120,7 +134,8 @@ const Card = ({ element }) => {
             {/* === Modal === */}
             {open && (
                 <div className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4 overflow-auto">
-                    <div className="bg-[#1a1a1a] text-white rounded-xl w-full max-w-6xl shadow-2xl overflow-hidden">
+                    <div className="bg-[#1a1a1a] text-white rounded-xl w-full max-w-6xl shadow-2xl overflow-hidden"
+                    >
                         {/* === Top Bar === */}
                         <div className="flex items-center justify-between px-5 py-4 bg-black border-b border-gray-800">
                             <div className="flex gap-3 items-center">
@@ -157,7 +172,9 @@ const Card = ({ element }) => {
                         {/* === Content === */}
                         <div className="grid grid-cols-1 md:grid-cols-2">
                             {/* === Preview === */}
-                            <div className="h-[500px] bg-[#111] border-r border-gray-800">
+                            <div className="h-[500px] bg-[#111] border-r border-gray-800"
+                                ref={modalRef}
+                            >
                                 <iframe
                                     title="Preview"
                                     className="w-full h-full"
@@ -254,7 +271,10 @@ const Card = ({ element }) => {
                                 <button className="flex items-center gap-2 px-3 py-2 bg-[#2a2a2a] rounded-md hover:bg-[#333]">
                                     <BiExport /> Export
                                 </button>
-                                <button className="flex items-center gap-2 px-3 py-2 bg-[#2a2a2a] rounded-md hover:bg-[#333]">
+                                <button
+                                    onClick={handleMaximize}
+                                    className="flex items-center gap-2 px-3 py-2 bg-[#2a2a2a] rounded-md hover:bg-[#333]"
+                                >
                                     <CgMaximize /> Maximize
                                 </button>
                             </div>
