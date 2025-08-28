@@ -67,7 +67,7 @@ const HeroSection = () => {
 
             {/* Search bar */}
             <div className="mt-10 flex justify-center">
-                <div className="flex items-center hover:scale-110 transition-transform bg-zinc-800 rounded-xl pl-4 pr-2 py-3 w-full max-w-lg">
+                <div className="flex items-center hover:scale-105 transition-transform bg-zinc-800 rounded-xl pl-4 pr-2 py-3 w-full max-w-lg">
                     <svg
                         className="w-5 h-5 text-gray-400 mr-2"
                         fill="none"
