@@ -20,7 +20,7 @@ mongoose.connect(process.env.MONGO_URI).then(() => {
 });
 
 app.use(cors({
-    origin: "http://localhost:5175",
+    origin: process.env.CLIENT_URL || "http://localhost:5175", // your frontend url.
     methods: ["GET", "POST"],
     credentials: true, // ✅ allow sending cookies from frontend
 }));
