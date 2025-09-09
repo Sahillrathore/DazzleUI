@@ -5,6 +5,7 @@ import axios from "axios";
 import SaveElementModal from "../components/SaveElementModal";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/authContext";
+import { getAllElements } from "../utils/apiCall";
 
 const defaultTemplates = {
     button: {
@@ -43,13 +44,14 @@ const defaultTemplates = {
 
 const CreatePage = () => {
 
-    const {user, setNotification} = useAuth();
+    const { user, setNotification } = useAuth();
     const [isOpen, setIsOpen] = useState(true);
     const [bgColor, setBgColor] = useState("#e8e8e8");
     const [currentTab, setCurrentTab] = useState("html");
     const [saveModalOpen, setSaveModalOpen] = useState(false);
     const [elementType, setElementType] = useState('');
     const navigate = useNavigate();
+    const { setAllElements, } = useAuth();
 
     const [formData, setFormdata] = useState({
         id: crypto.randomUUID(),
@@ -86,10 +88,19 @@ const CreatePage = () => {
         }
     }, [formData.type, formData.framework]);
 
+    const fetchElements = async () => {
+        try {
+            const elements = await getAllElements();
+            setAllElements(elements);
+        } catch (err) {
+            console.error("Failed to fetch elements", err);
+        }
+    };
+
     const handleSave = async ({ title, tags }) => {
 
-        if(!user) {
-            setNotification({msg: 'Please login first', type: 'error'})
+        if (!user) {
+            setNotification({ msg: 'Please login first', type: 'error' })
             return;
         }
         if (!title) {
@@ -112,10 +123,12 @@ const CreatePage = () => {
                 withCredentials: true,
             });
 
+            await fetchElements();
+
             if (res.status === 201) {
                 alert("UI Element saved to server!");
                 navigate('/elements')
-                console.log(res.data.element);
+                // console.log(res.data.element);
             }
         } catch (err) {
             console.error("Save failed:", err);

@@ -4,6 +4,7 @@ import { RiToggleLine } from 'react-icons/ri';
 import { IoMdSwitch, IoMdCheckboxOutline } from 'react-icons/io';
 import { FiLoader } from 'react-icons/fi';
 import { MdOutlinePowerInput } from "react-icons/md";
+import { TiBusinessCard } from "react-icons/ti";
 
 const elementsTypes = [
     {
@@ -35,6 +36,11 @@ const elementsTypes = [
         name: "Input",
         value: "input",
         icon: <MdOutlinePowerInput size={40} />
+    },
+    {
+        name: "Card",
+        value: "card",
+        icon: <TiBusinessCard size={40} />
     },
 ];
 

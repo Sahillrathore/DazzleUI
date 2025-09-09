@@ -38,8 +38,10 @@ export const AuthProvider = ({ children }) => {
     useEffect(() => {
         const fetchElements = async () => {
             try {
+                setLoading(true);
                 const elements = await getAllElements();
                 setAllElements(elements);
+                setLoading(false);
             } catch (err) {
                 console.error("Failed to fetch elements", err);
             }
