@@ -15,7 +15,7 @@ const ParticularElements = () => {
         const fetchElements = async () => {
             setLoading(true);
             try {
-                let url = 'http://localhost:5000/api/elements';
+                let url = `${import.meta.env.VITE_BACKEND_URL}/api/elements`;
                 console.log(type);
 
                 if (type) {
