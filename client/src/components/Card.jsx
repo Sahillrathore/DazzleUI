@@ -111,7 +111,7 @@ const Card = ({ element }) => {
         <>
             {/* === Card Preview === */}
             <div
-                className="bg-[#1a1a1a] rounded-xl overflow-hidden cursor-pointer hover:shadow-lg transition"
+                className="bg-[#1a1a1a] max-w-[20rem] rounded-xl overflow-hidden cursor-pointer hover:shadow-lg transition"
                 onClick={() => setOpen(true)}
             >
                 <div className="h-52 bg-black">

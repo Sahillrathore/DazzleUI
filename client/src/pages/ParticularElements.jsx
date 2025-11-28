@@ -4,12 +4,13 @@ import axios from 'axios';
 import Card from '../components/Card';
 import { useAuth } from '../context/authContext';
 import LoadingSpinner from '../components/Loading';
+import SkeletonCard from '../components/SkeletonCard';
 
 const ParticularElements = () => {
     const { type } = useParams(); // 👈 grabs 'button', 'checkbox' etc from URL
     const [elements, setElements] = useState([]);
     const [search, setSearch] = useState("");
-    const {loading, setLoading} = useAuth();
+    const { loading, setLoading } = useAuth();
 
     useEffect(() => {
         const fetchElements = async () => {
@@ -37,33 +38,38 @@ const ParticularElements = () => {
     );
 
     return (
-        <div className="p-4">
+        <div className="md:p-4 overflow-hidden">
+
             {
-                loading && <LoadingSpinner />
+                loading ?
+                    <div className='w-full overflow-hidden'><SkeletonCard /></div>
+                    :
+                    <div>
+                        <div className="flex md:flex-row flex-col md:items-center md:ga0 gap-4 justify-between mt-1 mb-6">
+                            <h1 className="text-3xl mt-0 font-bold text-gray-200 capitalize mb-0">{type ? `${type} Elements` : "All Elements"}</h1>
+
+                            <input
+                                type="text"
+                                placeholder="Search tags, users, posts..."
+                                value={search}
+                                onChange={(e) => setSearch(e.target.value)}
+                                className="px-4 py-2 rounded-lg bg-[#2b2b2b] border border-gray-700 w-full max-w-72 text-sm text-white placeholder-gray-500"
+                            />
+                        </div>
+
+                        {filtered.length === 0 && !loading ? (
+                            <div className="text-gray-400 text-center text-lg mt-12">
+                                No elements found
+                            </div>
+                        ) : (
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                                {filtered.map((el) => (
+                                    <Card element={el} key={el._id} />
+                                ))}
+                            </div>
+                        )}
+                    </div>
             }
-            <div className="flex items-center justify-between mt-1 mb-6">
-                <h1 className="text-3xl mt-0 font-bold text-gray-200 capitalize mb-0">{type ? `${type} Elements` : "All Elements"}</h1>
-
-                <input
-                    type="text"
-                    placeholder="Search tags, users, posts..."
-                    value={search}
-                    onChange={(e) => setSearch(e.target.value)}
-                    className="px-4 py-2 rounded-lg bg-[#2b2b2b] border border-gray-700 w-full max-w-72 text-sm text-white placeholder-gray-500"
-                />
-            </div>
-
-            {filtered.length === 0 && !loading ? (
-                <div className="text-gray-400 text-center text-lg mt-12">
-                    No elements found
-                </div>
-            ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {filtered.map((el) => (
-                        <Card element={el} key={el._id} />
-                    ))}
-                </div>
-            )}
 
         </div>
     );
