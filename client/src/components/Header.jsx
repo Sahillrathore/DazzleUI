@@ -4,17 +4,23 @@ import { useAuth } from "../context/authContext";
 import { logoutUser } from "../utils/apiCall";
 import { FaRegUser } from "react-icons/fa";
 import { AiOutlineLogout } from "react-icons/ai";
+import Signup from "../pages/Signup";
 
 export default function Header() {
     const [isMegaMenuOpen, setMegaMenuOpen] = useState(false);
     const [isDropdownOpen, setDropdownOpen] = useState(false);
+    const [signupModal, setSignupModal] = useState(false);
 
     const { user, setUser } = useAuth();
 
     const navigate = useNavigate();
 
     const handleCreate = () => {
-        navigate(user ? "/create" : "/signup");
+        if (user) {
+            navigate("/create");
+        } else {
+            setSignupModal(true);
+        }
     };
 
 
@@ -40,8 +46,8 @@ export default function Header() {
 
                 <div
                     className="relative group"
-                    // onMouseEnter={() => setMegaMenuOpen(true)}
-                    // onMouseLeave={() => setMegaMenuOpen(false)}
+                // onMouseEnter={() => setMegaMenuOpen(true)}
+                // onMouseLeave={() => setMegaMenuOpen(false)}
                 >
                     <Link to='/elements' className="px-3 py-1 rounded hover:bg-white/10 transition font-medium">Elements </Link>
 
@@ -119,7 +125,7 @@ export default function Header() {
                         </div>
                     ) : (
                         <button className="bg-white/10 px-4 py-1.5 rounded text-white font-semibold flex items-center gap-2"
-                            onClick={() => navigate('/signup')}
+                            onClick={() => setSignupModal(true)}
                         >
                             🚀 Join the Community
                         </button>
@@ -127,6 +133,9 @@ export default function Header() {
                 }
 
             </div>
+
+            {signupModal && <Signup setIsOpen={setSignupModal} />}
+
         </header>
     );
 }
