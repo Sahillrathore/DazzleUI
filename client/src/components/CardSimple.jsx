@@ -45,7 +45,7 @@ export default function CardSimple({ element }) {
         className="bg-[#141414] rounded-xl md:w-80 overflow-hidden cursor-pointer ring-1 ring-white/5 hover:ring-white/10 transition"
         onClick={() => setOpen(true)}
       >
-        <div className="h-56 w-full">
+        <div className="md:h-56 h-32 md:w-full w-36">
           <iframe
             title="Preview"
             className="w-full h-full"
