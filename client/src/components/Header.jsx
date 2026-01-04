@@ -54,7 +54,7 @@ export default function Header() {
       <div className=" mx-auto flex items-center justify-between gap-4">
         {/* left: logo + desktop nav */}
         <div className="flex items-center gap-4">
-          <Link to="/" className="text-lg md:text-xl font-bold text-white flex items-center gap-2">
+          <Link to="/" className="text-lg md:text-xl font-bold text-white flex items-center gap-0">
             <span className="text-purple-400">Dora</span>UI
           </Link>
 
@@ -67,7 +67,10 @@ export default function Header() {
             >
               {/* Mega menu trigger */}
               <button
-                onClick={toggleMegaMenu}
+                onClick={()=>{
+                  toggleMegaMenu()
+                  navigate('/elements')
+                }}
                 aria-haspopup="true"
                 aria-expanded={isMegaMenuOpen}
                 className="px-3 py-1 rounded hover:bg-white/10 transition font-medium"

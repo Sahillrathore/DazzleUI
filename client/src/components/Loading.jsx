@@ -1,9 +1,50 @@
 import React from 'react';
+import { FaTruckLoading } from 'react-icons/fa';
 
 const LoadingSpinner = () => {
     return (
         <div style={styles.overlay}>
-            <div style={styles.loader}></div>
+            <div class="container">
+                <div class="moon">
+                    <div class="crater crater1"></div>
+                    <div class="crater crater2"></div>
+                    <div class="crater crater3"></div>
+                    <div class="crater crater4"></div>
+                    <div class="crater crater5"></div>
+                    <div class="shadow"></div>
+                    <div class="eye eye-l"></div>
+                    <div class="eye eye-r"></div>
+                    <div class="mouth"></div>
+                    <div class="blush blush1"></div>
+                    <div class="blush blush2"></div>
+                </div>
+
+                <div class="orbit">
+                    <div class="rocket">
+                        <div class="window"></div>
+                        <div class="fire"></div>
+                        <div class="gas"></div>
+                        <div class="gas"></div>
+                        <div class="gas"></div>
+                        <div class="gas"></div>
+                        <div class="gas"></div>
+                        <div class="gas"></div>
+                        <div class="gas"></div>
+                    </div>
+                </div>
+                <div class="curve">
+                    <svg viewBox="0 0 500 500">
+                        <path
+                            id="loading"
+                            d="M73.2,148.6c4-6.1,65.5-96.8,178.6-95.6c111.3,1.2,170.8,90.3,175.1,97"
+                        ></path>
+                        <text width="500">
+                            <textPath xlink:href="#loading">...loading...</textPath>
+                        </text>
+                    </svg>
+                </div>
+            </div>
+
         </div>
     );
 };

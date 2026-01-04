@@ -2,14 +2,17 @@ import clsx from "clsx";
 import React, { useEffect, useState } from "react";
 import { FaRocket } from "react-icons/fa";
 import { MdOutlineElectricBolt } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 
 const HeroSection = () => {
   const words = ["Awesome", "Creative", "Modern", "Engaging"];
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [animate, setAnimate] = useState(false);
+  const [searchInput, setSearchInput] = useState('');
 
   // longest word used to reserve space so layout doesn't jump
   const longestWord = words.reduce((a, b) => (a.length > b.length ? a : b));
+  const navigate = useNavigate();
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -22,6 +25,13 @@ const HeroSection = () => {
 
     return () => clearInterval(interval);
   }, []);
+
+  const handleSearch = (e) => {
+    e.preventDefault()
+    if(!searchInput) return
+    navigate('/elements')
+    // console.log(searchInput)
+  }
 
   return (
     <section className="relative text-white py-12 md:py-20 px-4 md:px-8 lg:px-12 overflow-hidden">
@@ -75,7 +85,7 @@ const HeroSection = () => {
             <form
               role="search"
               className="flex items-center bg-zinc-800 rounded-xl pl-3 pr-2 py-2 md:py-3 hover:scale-[1.02] transform transition-transform"
-              onSubmit={(e) => e.preventDefault()}
+              onSubmit={handleSearch}
             >
               <svg
                 className="w-5 h-5 text-gray-400 mr-2 flex-shrink-0"
@@ -95,6 +105,7 @@ const HeroSection = () => {
                 placeholder="Search for components, styles, creators..."
                 className="bg-transparent outline-none text-sm md:text-base text-gray-300 flex-1 min-w-0"
                 aria-label="Search components, styles, creators"
+                onChange={(e)=>setSearchInput(e.target.value)}
               />
 
               <button
